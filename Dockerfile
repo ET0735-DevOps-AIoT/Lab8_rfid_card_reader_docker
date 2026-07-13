@@ -6,9 +6,13 @@ WORKDIR /app
 # Copy SPI-Py driver to rfid_card_reader
 COPY SPI-Py ./SPI-Py
 
-# Install the relevant modules required 
+# Install the relevant modules required
 
-# Install SPI driver 
+# Python 3.12+ removed distutils (PEP 632), which SPI-Py's setup.py imports;
+# setuptools provides a compatible replacement
+RUN pip install setuptools
+
+# Install SPI driver
 WORKDIR $SPI_PATH
 RUN python3 setup.py install
 
