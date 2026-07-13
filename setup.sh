@@ -6,9 +6,10 @@ set -e
 cd "$(dirname "$0")"
 
 # python3-setuptools: needed on Python 3.12+ where distutils was removed (PEP 632)
+# python3-dev + gcc:  to compile the SPI driver C extension
 # python3-smbus:      I2C library for the LCD
 # python3-rpi.gpio:   GPIO library for the LED / keypad
-sudo apt-get install -y python3-setuptools python3-smbus python3-rpi.gpio
+sudo apt-get install -y python3-setuptools python3-dev gcc python3-smbus python3-rpi.gpio
 
 # Build and install the SPI driver for the RFID reader from the submodule
 if [ ! -f SPI-Py/setup.py ]; then
