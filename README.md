@@ -11,22 +11,22 @@ git clone --recurse-submodules https://github.com/ET0735-DevOps-AIoT/Lab8_rfid_c
 
 ## 2. Run natively on the Raspberry Pi
 
-The RFID driver (`spi` module) comes from the **SPI-Py submodule** and must be
-built and installed first:
+```bash
+python main.py            # tap an RFID card - its ID shows on the LCD
+```
+
+On the standard lab Pi image this works directly. If it fails with a missing
+module error (`spi`, `smbus`, or `distutils`), the Pi is missing the
+pre-installed drivers — run the setup script once, then try again:
 
 ```bash
-# Needed on Python 3.12 or newer: distutils was removed from the standard
-# library (PEP 632); setuptools provides a compatible replacement.
-sudo apt install python3-setuptools
-
-cd SPI-Py
-sudo python3 setup.py install
-cd ..
-
-pip3 install smbus        # I2C LCD driver
-
-python3 main.py           # tap an RFID card - its ID shows on the LCD
+./setup.sh
+python main.py
 ```
+
+The script installs `python3-setuptools` (Python 3.12+ removed distutils,
+PEP 632), the I2C/GPIO libraries, and builds the RFID SPI driver from the
+**SPI-Py submodule**.
 
 > **Note:** do not `pip install spi` — the `spi` package on PyPI is a
 > different library that happens to share the module name. The RFID code
