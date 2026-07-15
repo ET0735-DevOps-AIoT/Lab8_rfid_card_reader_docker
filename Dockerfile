@@ -16,6 +16,13 @@ RUN pip install setuptools
 WORKDIR $SPI_PATH
 RUN python3 setup.py install
 
-# Trigger Python script
+# Install the GPIO (LED/keypad) and I2C (LCD) libraries
 WORKDIR /app
+RUN pip3 install --no-cache-dir rpi.gpio smbus
+
+# Copy the application and its HAL drivers into the image
+COPY main.py ./
+COPY hal ./hal
+
+# Trigger Python script
 CMD ["python3", "./main.py"]
